@@ -1,6 +1,7 @@
 package com.challengehub.service.impl;
 
 import com.challengehub.dto.challenge.ChallengeDto;
+import com.challengehub.dto.userchallenge.ChallengeProgressDto;
 import com.challengehub.dto.userchallenge.UserChallengeDto;
 import com.challengehub.dto.userchallenge.UserChallengeRequest;
 import com.challengehub.exception.ResourceNotFoundException;
@@ -16,8 +17,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor
@@ -73,6 +77,7 @@ public class UserChallengeServiceImpl implements UserChallengeService {
                 .challenge(challenge)
                 .progress(0)
                 .completed(false)
+                .startDate(request.getStartDate() != null ? request.getStartDate() : java.time.LocalDateTime.now())
                 .build();
         
         UserChallenge savedUserChallenge = userChallengeRepository.save(userChallenge);
@@ -115,6 +120,88 @@ public class UserChallengeServiceImpl implements UserChallengeService {
         
         userChallengeRepository.delete(userChallenge);
     }
+
+    @Override
+    public ChallengeProgressDto getChallengeProgress(Long id) {
+        User currentUser = getCurrentUser();
+        UserChallenge userChallenge = userChallengeRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("UserChallenge", "id", id));
+        
+        // Verify that the user challenge belongs to the current user
+        if (!userChallenge.getUser().getId().equals(currentUser.getId())) {
+            throw new IllegalArgumentException("You don't have access to this challenge");
+        }
+        
+        Challenge challenge = userChallenge.getChallenge();
+        LocalDateTime startDate = userChallenge.getStartDate();
+        LocalDateTime now = LocalDateTime.now();
+        
+        // Calculate days since start
+        long daysSinceStart = startDate != null ? 
+                ChronoUnit.DAYS.between(startDate.toLocalDate(), now.toLocalDate()) : 0;
+        
+        // Calculate current day (1-indexed)
+        int currentDay = (int) daysSinceStart + 1;
+        
+        // Ensure current day doesn't exceed duration
+        currentDay = Math.min(currentDay, challenge.getDurationDays());
+        
+        // Calculate expected completion date
+        LocalDateTime expectedCompletionDate = startDate != null ?
+                startDate.plusDays(challenge.getDurationDays()) : null;
+        
+        // Calculate days completed, remaining, and overdue
+        int daysCompleted = Math.min(currentDay - 1, userChallenge.getProgress());
+        int daysRemaining = challenge.getDurationDays() - daysCompleted;
+        
+        // Calculate overdue days
+        int overdueDays = 0;
+        if (expectedCompletionDate != null && now.isAfter(expectedCompletionDate) && !userChallenge.getCompleted()) {
+            overdueDays = (int) ChronoUnit.DAYS.between(expectedCompletionDate.toLocalDate(), now.toLocalDate());
+        }
+        
+        // Store the final current day value
+        final int finalCurrentDay = currentDay;
+        
+        // Generate day statuses
+        List<ChallengeProgressDto.DayStatusDto> dayStatuses = IntStream.rangeClosed(1, challenge.getDurationDays())
+                .mapToObj(day -> {
+                    String status;
+                    if (day <= userChallenge.getProgress()) {
+                        status = "completed";
+                    } else if (day == finalCurrentDay && !userChallenge.getCompleted()) {
+                        status = "current";
+                    } else if (day > finalCurrentDay) {
+                        status = "upcoming";
+                    } else {
+                        status = "overdue";
+                    }
+                    
+                    return ChallengeProgressDto.DayStatusDto.builder()
+                            .day(day)
+                            .status(status)
+                            .build();
+                })
+                .collect(Collectors.toList());
+        
+        // Build and return the progress DTO
+        return ChallengeProgressDto.builder()
+                .id(userChallenge.getId())
+                .title(challenge.getTitle())
+                .category(challenge.getCategory())
+                .startDate(startDate)
+                .completionDate(userChallenge.getCompleted() ? 
+                        startDate.plusDays(userChallenge.getProgress()) : null)
+                .durationDays(challenge.getDurationDays())
+                .currentDay(currentDay)
+                .progress(userChallenge.getProgress())
+                .completed(userChallenge.getCompleted())
+                .dayStatuses(dayStatuses)
+                .daysCompleted(daysCompleted)
+                .daysRemaining(daysRemaining)
+                .overdueDays(overdueDays)
+                .build();
+    }
     
     private User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -129,6 +216,7 @@ public class UserChallengeServiceImpl implements UserChallengeService {
                 .challenge(mapChallengeToDto(userChallenge.getChallenge()))
                 .progress(userChallenge.getProgress())
                 .completed(userChallenge.getCompleted())
+                .startDate(userChallenge.getStartDate())
                 .build();
     }
     

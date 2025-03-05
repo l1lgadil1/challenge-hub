@@ -1,0 +1,181 @@
+/* Progress Bar Styles */
+.progress-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.progress-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.progress-status {
+    display: inline-block;
+    padding: 5px 15px;
+    background-color: #e7f1ff;
+    color: #0d6efd;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+.progress-info {
+    margin-bottom: 20px;
+    color: #6c757d;
+}
+
+.progress-days {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.day-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.day-circle:hover {
+    transform: scale(1.1);
+}
+
+.day-completed {
+    background-color: #28a745;
+    color: white;
+    border: 2px solid #28a745;
+}
+
+.day-current {
+    background-color: #000;
+    color: white;
+    border: 2px solid #000;
+}
+
+.day-upcoming {
+    background-color: #f8f9fa;
+    color: #6c757d;
+    border: 2px solid #dee2e6;
+}
+
+.day-overdue {
+    background-color: #dc3545;
+    color: white;
+    border: 2px solid #dc3545;
+}
+
+.progress-fractions {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    color: #6c757d;
+}
+
+.progress-stats {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.progress-stats-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.progress-stats-label {
+    font-weight: bold;
+}
+
+.progress-stats-value {
+    color: #6c757d;
+}
+
+.progress-stats-value.overdue {
+    color: #dc3545;
+}
+
+.progress-dates {
+    display: flex;
+    justify-content: space-between;
+    color: #6c757d;
+}
+
+.progress-date-label {
+    font-weight: bold;
+}
+
+.progress-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #212529;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.progress-button:hover {
+    background-color: #343a40;
+}
+
+.progress-legend {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    color: #6c757d;
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.legend-completed {
+    background-color: #28a745;
+}
+
+.legend-current {
+    background-color: #000;
+}
+
+.legend-upcoming {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+}
+
+.legend-overdue {
+    background-color: #dc3545;
+} 

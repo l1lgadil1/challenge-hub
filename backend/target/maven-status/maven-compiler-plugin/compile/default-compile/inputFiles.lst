@@ -2,6 +2,7 @@
 /Users/ilyasagadilov/Desktop/projects/iitu/java-2/backend/src/main/java/com/challengehub/dto/auth/AuthResponse.java
 /Users/ilyasagadilov/Desktop/projects/iitu/java-2/backend/src/main/java/com/challengehub/controller/TestController.java
 /Users/ilyasagadilov/Desktop/projects/iitu/java-2/backend/src/main/java/com/challengehub/model/User.java
+/Users/ilyasagadilov/Desktop/projects/iitu/java-2/backend/src/main/java/com/challengehub/controller/ViewController.java
 /Users/ilyasagadilov/Desktop/projects/iitu/java-2/backend/src/main/java/com/challengehub/repository/UserRepository.java
 /Users/ilyasagadilov/Desktop/projects/iitu/java-2/backend/src/main/java/com/challengehub/config/ApplicationConfig.java
 /Users/ilyasagadilov/Desktop/projects/iitu/java-2/backend/src/main/java/com/challengehub/controller/RewardController.java
@@ -27,6 +28,7 @@
 /Users/ilyasagadilov/Desktop/projects/iitu/java-2/backend/src/main/java/com/challengehub/service/UserChallengeService.java
 /Users/ilyasagadilov/Desktop/projects/iitu/java-2/backend/src/main/java/com/challengehub/model/Comment.java
 /Users/ilyasagadilov/Desktop/projects/iitu/java-2/backend/src/main/java/com/challengehub/repository/RewardRepository.java
+/Users/ilyasagadilov/Desktop/projects/iitu/java-2/backend/src/main/java/com/challengehub/dto/userchallenge/ChallengeProgressDto.java
 /Users/ilyasagadilov/Desktop/projects/iitu/java-2/backend/src/main/java/com/challengehub/repository/CommentRepository.java
 /Users/ilyasagadilov/Desktop/projects/iitu/java-2/backend/src/main/java/com/challengehub/security/JwtAuthenticationFilter.java
 /Users/ilyasagadilov/Desktop/projects/iitu/java-2/backend/src/main/java/com/challengehub/controller/ChallengeController.java

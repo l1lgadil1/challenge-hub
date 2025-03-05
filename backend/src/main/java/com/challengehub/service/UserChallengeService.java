@@ -1,5 +1,6 @@
 package com.challengehub.service;
 
+import com.challengehub.dto.userchallenge.ChallengeProgressDto;
 import com.challengehub.dto.userchallenge.UserChallengeDto;
 import com.challengehub.dto.userchallenge.UserChallengeRequest;
 
@@ -12,4 +13,5 @@ public interface UserChallengeService {
     UserChallengeDto startChallenge(UserChallengeRequest request);
     UserChallengeDto updateUserChallenge(Long id, UserChallengeRequest request);
     void deleteUserChallenge(Long id);
+    ChallengeProgressDto getChallengeProgress(Long id);
 } 

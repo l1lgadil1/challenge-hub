@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -30,6 +31,9 @@ public class UserChallenge {
     private Integer progress;
 
     private Boolean completed;
+    
+    @Column(name = "start_date")
+    private LocalDateTime startDate;
 
     @PrePersist
     protected void onCreate() {
@@ -38,6 +42,9 @@ public class UserChallenge {
         }
         if (completed == null) {
             completed = false;
+        }
+        if (startDate == null) {
+            startDate = LocalDateTime.now();
         }
     }
 } 

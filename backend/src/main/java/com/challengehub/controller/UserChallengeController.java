@@ -1,5 +1,6 @@
 package com.challengehub.controller;
 
+import com.challengehub.dto.userchallenge.ChallengeProgressDto;
 import com.challengehub.dto.userchallenge.UserChallengeDto;
 import com.challengehub.dto.userchallenge.UserChallengeRequest;
 import com.challengehub.service.UserChallengeService;
@@ -79,5 +80,14 @@ public class UserChallengeController {
     public ResponseEntity<Void> deleteUserChallenge(@PathVariable Long id) {
         userChallengeService.deleteUserChallenge(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @Operation(
+        summary = "Get challenge progress",
+        description = "Retrieves detailed progress information for a specific user challenge"
+    )
+    @GetMapping("/{id}/progress")
+    public ResponseEntity<ChallengeProgressDto> getChallengeProgress(@PathVariable Long id) {
+        return ResponseEntity.ok(userChallengeService.getChallengeProgress(id));
     }
 } 

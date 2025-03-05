@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -15,4 +16,5 @@ public class UserChallengeDto {
     private ChallengeDto challenge;
     private Integer progress;
     private Boolean completed;
+    private LocalDateTime startDate;
 } 
